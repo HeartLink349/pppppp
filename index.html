@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>عالم شوشتي & دَكريِ اللى حِيلتيِ ❤️</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        :root {
+            --primary: #ff4d6d;
+            --secondary: #ff758f;
+            --gold: #d4af37;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --bg: #030303;
+            --glow-shadow: 0 0 20px rgba(255, 77, 109, 0.3);
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { margin: 0; background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
+
+        .hearts-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+        .heart-particle { position: absolute; color: var(--primary); opacity: 0.4; animation: fall linear infinite; filter: drop-shadow(0 0 5px var(--primary)); }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+
+        #page-1 {
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            background: radial-gradient(circle at center, #2b0b14 0%, #030303 100%);
+            position: fixed; width: 100%; z-index: 9999; transition: 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .login-card {
+            background: var(--glass); backdrop-filter: blur(25px); padding: 50px 30px;
+            border-radius: 40px; border: 1px solid var(--glass-border); text-align: center;
+            width: 90%; max-width: 450px; 
+            box-shadow: 0 0 40px rgba(255, 77, 109, 0.15); 
+            position: relative;
+        }
+        
+        .single-line-title {
+            white-space: nowrap; 
+            font-size: clamp(20px, 6vw, 30px); 
+            margin-bottom: 10px;
+            display: block;
+            font-weight: 900;
+        }
+
+        #page-2 { display: none; opacity: 0; height: 100vh; overflow-y: auto; position: relative; z-index: 5; transition: 1s; }
+        .container { padding: 30px 20px; max-width: 500px; margin: 0 auto; }
+
+        .main-title { font-weight: 900; background: linear-gradient(45deg, #fff, var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; }
+
+        .glass-card {
+            background: var(--glass); border: 1px solid var(--glass-border); border-radius: 35px; 
+            margin-bottom: 35px; overflow: hidden; opacity: 0; transform: translateY(40px); 
+            transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 15px rgba(255, 77, 109, 0.1); 
+        }
+        .glass-card.show { 
+            opacity: 1; 
+            transform: translateY(0); 
+            animation: cardGlow 3s infinite alternate; 
+        }
+
+        @keyframes cardGlow {
+            from { box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 10px rgba(255, 77, 109, 0.1); }
+            to { box-shadow: 0 10px 30px rgba(0,0,0,0.3), 0 0 25px rgba(255, 77, 109, 0.3); }
+        }
+
+        .glass-card img { width: 100%; display: block; filter: brightness(0.9); transition: 0.5s; }
+
+        .count-box { 
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01)); 
+            border: 1px solid var(--glass-border); padding: 20px 5px; border-radius: 25px; 
+            text-align: center; backdrop-filter: blur(15px); transition: 0.3s;
+        }
+        .count-num { font-size: 22px; font-weight: 800; display: block; color: var(--primary); text-shadow: 0 0 10px rgba(255,77,109,0.5); }
+        .counter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 30px 0; }
+
+        .notes-container { display: flex; overflow-x: auto; gap: 15px; padding: 20px 5px; scrollbar-width: none; }
+        .note-card { min-width: 150px; height: 150px; position: relative; transition: 0.8s; transform-style: preserve-3d; cursor: pointer; }
+        .note-card.flipped { transform: rotateY(180deg); }
+        .note-front, .note-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; padding: 20px; border-radius: 30px; border: 1px solid var(--glass-border); }
+        .note-front { background: var(--glass); color: var(--gold); font-size: 30px; }
+        .note-back { background: var(--primary); transform: rotateY(180deg); font-size: 14px; font-weight: 600; text-align: center; color: white; }
+
+        .promises-section { margin: 40px 0; }
+        .promise-item { background: var(--glass); border: 1px solid var(--glass-border); padding: 15px 20px; border-radius: 20px; margin-bottom: 10px; display: flex; align-items: center; gap: 15px; transition: 0.3s; }
+        .promise-item span { font-size: 14px; line-height: 1.4; }
+
+        #page-3 { display: none; opacity: 0; position: fixed; inset: 0; z-index: 10000; background: #000; transition: 1.5s; overflow-y: auto; }
+        .secret-content { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; text-align: center; background: radial-gradient(circle at center, #3d0a18 0%, #000 100%); }
+        .floating-message { background: rgba(255,255,255,0.03); border: 1px solid var(--gold); padding: 45px 30px; border-radius: 50px; backdrop-filter: blur(40px); box-shadow: 0 0 60px rgba(212, 175, 55, 0.15); width: 100%; max-width: 450px; }
+
+        .image-caption { padding: 20px; text-align: center; font-size: 14px; line-height: 1.6; color: #eee; border-top: 1px solid var(--glass-border); }
+
+        .btn-style { background: linear-gradient(45deg, var(--primary), var(--secondary)); color: white; border: none; padding: 18px 20px; border-radius: 20px; font-weight: 800; cursor: pointer; width: 100%; transition: 0.3s; box-shadow: 0 10px 20px rgba(255,77,109,0.3); font-size: 15px; }
+        .btn-outline { background: none; border: 1px solid var(--gold); color: var(--gold); padding: 15px 35px; border-radius: 50px; cursor: pointer; margin-top: 30px; font-weight: 600; transition: 0.3s; }
+
+        .music-bar { background: var(--glass); padding: 18px; border-radius: 30px; border: 1px solid var(--glass-border); display: flex; align-items: center; gap: 15px; margin: 15px 0; backdrop-filter: blur(20px); }
+        .play-icon { width: 45px; height: 45px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px var(--primary); cursor: pointer; flex-shrink: 0; }
+    </style>
+</head>
+<body>
+
+    <div class="hearts-bg" id="hearts-container"></div>
+
+    <section id="page-1">
+        <div class="login-card animate__animated animate__zoomIn">
+            <h1 class="main-title single-line-title" style="-webkit-text-fill-color: initial; color: #fff;">شوشتي & دَكريِ اللى حِيلتيِ</h1>
+            <p style="opacity:0.8; font-size:14px; margin-bottom:30px;">الباسورد يوم حُبنا الأول</p>
+            <input type="text" id="passInput" placeholder="اكتب الباسورد يا كوتومونث" style="width:100%; background:rgba(255,255,255,0.07); border:1px solid var(--glass-border); padding:18px; border-radius:20px; color:#fff; text-align:center; margin-bottom:25px; outline:none; font-size: 16px;">
+            <button class="btn-style" onclick="goToPage2()">أدخل عَالم حُبنا الخاص أنا وإنتَ</button>
+        </div>
+    </section>
+
+    <section id="page-2">
+        <div class="container">
+            <header style="text-align:center; padding:40px 0;">
+                <h2 class="main-title">قصه حُبنا الاعظم و الاجمل❤️</h2>
+                <p style="opacity:0.9; margin-top:15px; font-size: 14px; line-height: 1.6;">
+                    _تعالَ، لأن الشوق وَحده لم يعد كَافياً ولأن الأماكن الَتى مَشيناها لا تزال تَنتظرك، تعالَ _لأن قلبي مَهما حَاول لم يتعلّم أن يكون إلا بِك ومَعك 
+                </p>
+            </header>
+
+            <div class="counter-grid">
+                <div class="count-box"><span id="years" class="count-num">0</span><span style="font-size:11px; opacity:0.6;">سنة</span></div>
+                <div class="count-box"><span id="months" class="count-num">0</span><span style="font-size:11px; opacity:0.6;">شهر</span></div>
+                <div class="count-box"><span id="days" class="count-num">0</span><span style="font-size:11px; opacity:0.6;">يوم</span></div>
+                <div class="count-box"><span id="hours" class="count-num">0</span><span style="font-size:11px; opacity:0.6;">ساعة</span></div>
+                <div class="count-box"><span id="mins" class="count-num">0</span><span style="font-size:11px; opacity:0.6;">دقيقة</span></div>
+                <div class="count-box"><span id="secs" class="count-num">0</span><span style="font-size:11px; opacity:0.6;">ثانية</span></div>
+            </div>
+
+            <div class="music-bar">
+                <div class="play-icon" onclick="toggleMusic('loveSong1', 'pIcon1')"><i id="pIcon1" class="fa-solid fa-play"></i></div>
+                <div style="flex:1"><div style="font-size:13px; font-weight:700;">تَعالَ نِسمع الأغنية وتُكون فى حُضني...🎼</div></div>
+                <audio id="loveSong1" loop src="https://i.top4top.io/m_3714oxlfi1.mp4"></audio>
+            </div>
+
+            <div class="music-bar">
+                <div class="play-icon" onclick="toggleMusic('loveSong2', 'pIcon2')"><i id="pIcon2" class="fa-solid fa-play"></i></div>
+                <div style="flex:1"><div style="font-size:14px; font-weight:700;">الأغنية اللى بتوصفنا 🎼</div></div>
+                <audio id="loveSong2" loop src="https://h.top4top.io/m_3714jdagq1.mp4"></audio>
+            </div>
+
+            <div class="promises-section">
+                <div class="promise-item"><i class="fa-solid fa-heart" style="color:var(--gold)"></i> <span>تَدرى أن صُوتك وعُيونك وضِحكتك وبوزك تملأ قلبى حياة</span></div>
+                <div class="promise-item"><i class="fa-solid fa-star" style="color:var(--gold)"></i> <span>حَديثك مَعى من شفافيك هو عبارة عن جُرعات سعادة وعِشق فى قلبى</span></div>
+                <div class="promise-item"><i class="fa-solid fa-shield" style="color:var(--gold)"></i> <span>حَصنتك بإسم الله الّذى جَعل حُبى فى قَلبك</span></div>
+            </div>
+
+            <div class="notes-container">
+                <div class="note-card" onclick="this.classList.toggle('flipped')"><div class="note-front"><i class="fa-solid fa-moon"></i></div><div class="note-back">إنتَ بدر الليالي كُلها فى سماء عُيوني</div></div>
+                <div class="note-card" onclick="this.classList.toggle('flipped')"><div class="note-front"><i class="fa-solid fa-wine-glass"></i></div><div class="note-back">نَعود دائماً لِبعض كما تَعود الخَمرة إلي فَم العَاشق</div></div>
+                <div class="note-card" onclick="this.classList.toggle('flipped')"><div class="note-front"><i class="fa-solid fa-venus-mars"></i></div><div class="note-back">مَتي سَتعرف كَم أَهواك يا رَجلاً</div></div>
+            </div>
+
+            <div class="gallery">
+                <div class="glass-card"><img src="https://d.top4top.io/p_3714bhgfi1.jpg"><div class="image-caption">لِنلتقي لأروي لَك كَم أرهقنى الحَنين وكَم أحرقتني الذِكريات، لِنلتقي حتي أبوح لَك عَن مدي إشتياقي إليك، لِنلتقي لِنُطفئ نار المسافة وجَحيم البُعد ونُحييِ فى قلوبنا دِفء اللقاء، لقد أوجعني البُعد</div></div>
+                <div class="glass-card"><img src="https://c.top4top.io/p_3714hhper1.jpg"><div class="image-caption">«لِنلتقي، حتى نجعل لقائنا وَعداً لا يعرف الفناء»</div></div>
+                <div class="glass-card"><img src="https://e.top4top.io/p_3714kkit81.jpg"><div class="image-caption">يا لذة عِشقى، اللى مِستحمل نَكدى وهَبلي وعياطي والهرمونات بتاعتى، آسفة على اليوم ده وآسفة على الشات عشان عارفة ان هى غالية على قلبك 🫥</div></div>
+                <div class="glass-card"><img src="https://b.top4top.io/p_3714ldgp21.jpg"><div class="image-caption">شُكراً عشان أهديت ليا الهودي، كُل ما اشوفة بتخيل إنك موجود وأقعد أعيط من الشوق ليك 🫥</div></div>
+                <div class="glass-card"><img src="https://i.top4top.io/p_37140k1zw1.jpg"><div class="image-caption">لما تِنزل مصر تانِ هاتبيب ليا بألف جنية من عند كبدة الفلاح عشان عَجبتنى وانا عاوزة اتخن ليك، ومش هانسى وانا فى السينما ودخلت الكبدة وريحتها كانت فى الشنطة 🫥</div></div>
+                <div class="glass-card"><img src="https://h.top4top.io/p_37146m4r11.jpg"><div class="image-caption">جيبت ليك شيبسى بالكباب يااااا طفس وكَلته لوحدك وامي كانت مِنكدة علينا عشان ارجع البيت 🫥</div></div>
+                <div class="glass-card"><img src="https://i.top4top.io/p_3714jb0hq1.jpg"><div class="image-caption">يوم زنقة السِتات وإحنا بندور على إكسسوار أمي ، ويوم ما سِمعنا 3 افلام وخَلصنا الافلام الجديدة كُلها</div></div>
+                <div class="glass-card"><img src="https://f.top4top.io/p_3714t2p9a1.jpg"></div>
+                <div class="glass-card"><img src="https://g.top4top.io/p_3714mm8ad1.jpg"><div class="image-caption">كَلتها كُلها مرة واحدة عشان كُل ما بشوفها كنت بعيط عشان عيلتك خدوك من حُضنى، وشكرا عشان انتَ دورت عليها لحد ما جيبتها ليا، بس مش هسامح فى الشوكولا اللى ابوك كَلها 🫥</div></div>
+                <div class="glass-card"><img src="https://j.top4top.io/p_3714z66p31.jpg"><div class="image-caption">بداية قِصتنا كانت من المكان والطريق ده، ربنا يِحفظك ليا ويديم حُبك وإهتمامك بيا، مش هنسى الجرأة بتاعتك فى اليوم ده وإنتَ بِتلمس إيدي وإخترتنى عن الكُل 🫥</div></div>
+                <div class="glass-card"><img src="https://k.top4top.io/p_37147iyuc1.jpg"><div class="image-caption">كُل تذكرة تِشهد برحلة بين أرواحنا، أما بالنسبة للورقة الحمراء أنا مش هنسي إن إحنا رَمينا العِلبة فى نهر النيل 🫥</div></div>
+                <div class="glass-card"><img src="https://b.top4top.io/p_3714lo52w1.jpg"><div class="image-caption">اللهم بارك على الطول، كَمان شوية وتكون أطول من عمو رمسيس، كانت اول مرة ليا وليك فى المتحف المصرى ومش هانسى فرحتنا وإحنا داخلين جوا لأول مرة مع بعض 🫥</div></div>
+                <div class="glass-card"><img src="https://i.top4top.io/p_3714hprem1.jpg"><div class="image-caption">يا مَن له فى رُوحي مَكان لا يَملؤه أحد، هل لي عَندك مكان لا يأسره أحد؟ عَسل قلبي اللى عَنده أحن وألطف وأجمل ملامح 🫥</div></div>
+                <div class="glass-card"><img src="https://g.top4top.io/p_3714sxgag1.jpg"><div class="image-caption">والله انا مِدلعاك يا نونوتي إنتَ 🫥</div></div>
+                <div class="glass-card"><img src="https://l.top4top.io/p_37148qyr91.jpg"><div class="image-caption">إنتَ كنت أول مرة تروح الأهرامات وكانت معايا، بداية كُل حاجة مميزة ليك كانت معايا ودي حاجة بَحبها، بَحب المغامرات الصغيرة بتاعتنا، بَدعى ربنا كل يوم ان نتجمع فى أقرب وقت ونِعملها فى أقرب وقت ونِصنع ذكريات وضحكات جديدة 🫥</div></div>
+                <div class="glass-card"><img src="https://f.top4top.io/p_3714fzaj31.jpg"><div class="image-caption">يوم النَكد العَالمي ليا، أنا زِعلت ومُعترفة إنك ليك حق تتعصب بس أنا طارشة سمعت جُملتك اللى زَعلتني غَلط، بس مش تنسى إن نهاية اليوم شوفت مَحل الخمرة ونسيت الزعل وإنتَ شدتني الطريق كُله ضِحك 🫥</div></div>
+                <div class="glass-card"><img src="https://c.top4top.io/p_3714556qz1.jpg"><div class="image-caption">بَحب قوتك وشجاعتش وإنتَ بتكتب حَرفك وحَرفي فى بيت أعدائنا 🫥</div></div>
+                <div class="glass-card"><img src="https://d.top4top.io/p_3714addrm1.jpg"><div class="image-caption">فخورة بيك وبتعجبني فيك كُل ملامح جسمك ورشاقتك وشخصيتك وذكائك، أنا مُعتمدة عليك فى كُل حاجة وضعيفة من غيرك، مِحتاجة وجودك جنبي فى كُل لحظة 🫥</div></div>
+                <div class="glass-card"><img src="https://e.top4top.io/p_37149qu8w1.jpg"><div class="image-caption">الرِحلة اللى عَملتها ليك مفاجأة عشان أفرحك زى ما إنتَ بِتفرحني، كنت حَاميني من الكُل ومن ماما وعيلتي ومش كان فيه حد يقدر يكلمني وأنا معاك خوفاً مِنك، إنتَ رَجُلى وأنا ليا الدنيا كُلها فيك 🫥</div></div>
+                <div class="glass-card"><img src="https://a.top4top.io/p_3714hqu5c1.jpg"><div class="image-caption">بتجيب ليا الهدايا ديماً وإنتَ مش عارف إنك أغلى وأثمن هدية نصيب فى عُمري، السلسلة بتاعتك بَقت عِضو من أعضاء جِسمي، وكُل قطعة من الخواتم بتعانق بيها رُوحي قبل جِسمي ✨</div></div>
+                <div class="glass-card"><img src="https://h.top4top.io/p_3714gw7ig1.jpg"><div class="image-caption">مش هنسى لحظة فتح الكاتشب كانت شبه صواريخ البطاطس بالجمبري 🫥</div></div>
+                <div class="glass-card"><img src="https://k.top4top.io/p_3714ghz2i1.jpg"><div class="image-caption">كُل السفرية كنت نايم، وإنتَ فى السينما نِمت وصحيت تقولى إيه اللى حصل إحكيلى، وتنام فى يوم حُبنا بعد ما عَملتها فيا مرة واحدة واحدة 🫥</div></div>
+                <div class="glass-card"><img src="https://j.top4top.io/p_3714rkvhg1.jpg"><div class="image-caption">حَتي وإحنا مع بعض فى نفس المكان بَحب اسجل ليك تسجيل شاشة، مُدمنة تفاصيلك وبَحبك وبَحترمك لما بتشارك معايا لحظات يومك كُلها 🫥</div></div>
+                <div class="glass-card"><img src="https://c.top4top.io/p_371415f4a1.jpg"><div class="image-caption">سفرية إسماعلية اللى مش عَملنا فيها حاجة وكانت تعويض عن سفريتنا اللى باظت بس ربما عوضنا بالأحسن عشان نيتنا طيبة ورزقنا بسفرية إسكندرية 🫥</div></div>
+                <div class="glass-card"><img src="https://d.top4top.io/p_3714tn76b1.jpg"><div class="image-caption">شُكراً على طَلبية shein، ديماً بتحاول تِسعدني ومُحاولتك ديماً مِقدراها وشايفة تعبك، كانوا أجمل 3 شهور خَططنا فيهم لكُل حاجة حتي الهدوم اللى هانلبسها 🫥</div></div>
+                <div class="glass-card"><img src="https://b.top4top.io/p_3714wgpyk1.jpg"><div class="image-caption">أجمل حُضن وأعظم لحظة وأعذب يوم فى حياتي، يوم إعترافك ليا إنك مِحتاجني ومن اليوم ده وأنا وعدت نفسى إن لو الكُل ضدى أو روحي هاتتحرق مقابل أكون معاك ف أنا عُمرى كله ليك ومستحيل أسيب إيدك، يا لذة عِشقى، يا دواء هَمي ويا قلباً يَحيا بيه قَلبي 🫥</div></div>
+                <div class="glass-card"><img src="https://f.top4top.io/p_3714bnjuj1.jpg"><div class="image-caption">مش مسامحة أبوك برضو عشان كَلهم، وإحنا بنخبى الحاجة فى الدولاب ليه، وعمو ده كنت تقوم تضربه عشان زَعقلنا 🫥</div></div>
+                <div class="glass-card"><img src="https://g.top4top.io/p_37140slca1.jpg"><div class="image-caption">إنتَ اللى عَليك جِسم يوديني القِسم 🥺🫥</div></div>
+                <div class="glass-card"><img src="https://e.top4top.io/p_3714d4at11.jpg"><div class="image-caption">حَمودتي وهو بيدلع عليا وعامل نَفسة برئ ونونو، والشيطان بذات نفسه بيخاف مِنه، ومش فيه حَد شافه وهو بيقفل النور لما كُنا بناكل، ونظرته الشريرة</div></div>
+                <div class="glass-card"><img src="https://l.top4top.io/p_3714h8s2v1.jpg"><div class="image-caption">إبني اللى بيتدلع عليا قبل ما يكون الفَحل بتاعي والراجل اللى بيخاف مِنه الكُل بس بيكون معايا زى البيبي 🫥</div></div>
+                <div class="glass-card"><img src="https://a.top4top.io/p_3714zdjlj1.jpg"><div class="image-caption">اللهم بارك علينا ربنا يِحفظنا لبعض، شبة بعض فى كُل حاجة وبقينا نفس التصرفات والعصبية والكلام وحتى البوز🫥</div></div>
+                <div class="glass-card"><img src="https://b.top4top.io/p_37146x0vd1.jpg"><div class="image-caption">شوشتي: أنا عاوزة عم عَبدة | حمودي: عَم عبدة صاحي | انا عرفت الكُل بيحسدنا ليه من علاقتنا الجميلة 🫥</div></div>
+                <div class="glass-card"><img src="https://l.top4top.io/p_3714f1c6r1.jpg"><div class="image-caption">فَحلى ودَكري اللى حَيلتي إحنا مش علاقة عادية عشان تتكسر بكلام الناس، ولا حكاية سهلة عشان حد يغير منها. إحنا وَجع جميل، وراحة نادرة، وحاجة حقيقية وسط دوشة كتير. أنت مش بس فاهمني… أنت حَافظني، حافظ هبلي، حافظ ضعفي قبل قوتي، وده مش سهل، ولا أي حد يعرفه عَني . اللي بينا مِخوّفهم، عشان صادق، وعشان واضح، وعشان مفيهوش تمثيل. إنتَ عمرك ما كنت واقف قصادي، دايمًا واقف معايا… ( حتى لما الدنيا كلها تبقى ناحية تانية. كلامك ليا مش رسائل وخلاص، ده إحساس بيتحط عندي «مميّز بنجمة»، عشان أرجع له لما أتلخبط ، وأفتكر إن في حد شايفني زي ما أنا) أنا بحبك بهدوء الناس الواثقة، وأعرف إن اللي بينا أكبر من محاولات التفريق او خناقات ما بينا ، وأقوى من الغيرة، وأهدى من أي خوف. العلاقة اللي ربنا حاطط فيها سكينة، ما تهزّهاش عيون ولا تكسرها نوايا. آخر حاجة بطلب مِن ربنا يديم كلامك اللى بيلمس قلبى ويحفظ ليا كل رسالة بعتها ليا مميزة بنجمة على الواتس، وتِفضل طول عُمرك بتحبنى وبِتحب تسعدنى بكلامك</div></div>
+                <div class="glass-card"><img src="https://k.top4top.io/p_3714azonl1.jpg"><div class="image-caption">يا خطيبي، وعمو لما سألني قولت له ده خطيبي، الصورة دى كانت قبل أجمل أيام حياتي فى إسكندرية ومعاك، أجمل أيام عُمرى كانت لما تكون معاك وجنبك، بعيد عَنك مش حياتي عذاب بس إنتَ لما تكون بعيد عَني مش هايكون فى حياة من بَعدك، ربنا يِجمعنا فى ميعاد مش نفترق من بَعده أبداً 🫥</div></div>
+                <div class="glass-card"><img src="https://i.top4top.io/p_371415pc61.jpg"><div class="image-caption">"فيها إيه يَعني" مش كان مُجرد فيلم، كان عبارة عن ذكري حساسة وحنينة وإنتَ نايم على كتفي وبتاكل فشار وكنت بتنام معايا فى كل فيلم 🫥</div></div>
+                <div class="glass-card"><img src="https://a.top4top.io/p_3714gs6z41.jpg"><div class="image-caption">شُكرا على الميلك شيت انا شربت بتاعك عشان عَجبني، ومش هنسى وإنتَ بتتخانق كُنت دَكرى اللى حِيلتى والنونو بتاعي يا خلاثو🫥</div></div>
+                <div class="glass-card"><img src="https://h.top4top.io/p_3714bywdm1.jpg"><div class="image-caption">مَلامحنا هادية كإننا إخوات، أرواحنا وقلوبنا وتفكيرنا أساس حُبنا، آخر صورة لينا فى السفرية بعد نكد عِيلتنا وإنتَ بتحاول تفرحني، حَنان قلبي إشتاق لحنانك، بشوفك وإنتَ بِتحاول عَشاني وتِشتغل ومسؤول دي كُلها من أحن المشاهد فى حَياتي، ربنا يطمن قلبك ويمنحك راحة ما بعدها تعب. ورِبنا يقوّي جسمك ويهون عليك أي حاجة صعبة ويبعد عنك أى مرض، ربنا يملأ أيامك سكينة، ويبعد عنك القلق والخوف إستودعتك عند ربنا، ولو غيبت عن عيني شوية، عُمرك ما تغيب عن رَحمة ربنا رِبنا يحفظك ليا ويوفقك في شُغلك، ويِجعل طريقك سَهل، ومستقبلك أجمل ربنا معاك دايمًا، ويجبر خاطرك، ويطمن قلبك زي ما بتطمني ( ويبعد عنك البنات ما عادا انا، يارب تِكره العالم كُله واكون انا أَحب وأقرب واحدة ليك)</div></div>
+                <div class="glass-card"><img src="https://c.top4top.io/p_37148xtix1.jpg"><div class="image-caption">أنا نسيت آخد المناديل اليوم ده، بس خدت مناديل الحمام، وشُكراً على أكلة الحَمام والمشويات أكلتني زي ما خَططنا بس الملوخية وطنط بِتعملها انا خوفت مِنها🫥</div></div>
+                <div class="glass-card"><img src="https://j.top4top.io/p_3714zc62p1.jpg"><div class="image-caption">ربنا يسامح التليفون ده اللى كان واخدك مِني 🫥</div></div>
+                <div class="glass-card"><img src="https://e.top4top.io/p_3714x6y7v1.jpg"><div class="image-caption">اللهم بارك على كتاف جوزي اللى بالدنيا، وتِسلم إيدك على الآيس كوفي بس زعلانة عشان انا كنت ببوسك كتير وإنتَ تقول ليا خلاص ونِمت 🫥</div></div>
+                <div class="glass-card"><img src="https://d.top4top.io/p_3714ct9as1.jpg"><div class="image-caption">كانت آخر نومة وقاعدة مع بعض فى بيتي فى السفرية ، ومع إن القاعدة بسيطة وفَتحنا الشاشة 20 بوصة بذات نفسها إلا إن كان فيه دَفا وحُب ما بينا وإنتَ جنبى، إنتَ وَرتني حلاوة الأيام فين يا أماني ومَأمني، فى بيتنا فى المستقبل كُل يوم هانقعد زى كدة ونِشغل فيلم واقعد أبوس فيك وإنتَ تنام على عيال أم عبدة 🫥</div></div>
+                <div class="glass-card"><img src="https://j.top4top.io/p_3714hc7rz1.jpg"><div class="image-caption">تصوير فَحلي ودكري، وبيجامة وقت الإستقبال، يارب تِفضل وتدوم حلاوة البدايات بين قلوبنا 🫥</div></div>
+                <div class="glass-card"><img src="https://a.top4top.io/p_3714zgkyt1.jpg"><div class="image-caption">إتأكد إن هَوس قلبي اتعود يطمن لما يشوف جمال ملامحك قبل ما أنام كل يوم إنت عيونك لمّا تضحك، نورها يسبق كلامك وأنا تايهة فيهم، كأني لقيت السلام جوا ملامحك في عَسل عُيونك ونظرتك دفـا يمسح أي وجع ولمسة هدوء في وشك تخلي الدنيا تتصلّح إنت مش بس شكل… إنت إحساس يتعاش وكل تفصيلة فيك تقول إنك جميل من غير نِقاش؛ إنتَ لما تظهر قُدامي وبَسجل شاشة، بعيد الفيديو تاني كأني مش شبعت منك وأقعد أدوّر في ملامحك جزء جزء، كأني بلاقى سر مستخبي في عيونك ضحكتك بتاخدني، وزعلك يشد قلبي ليك من غير صوت؛ بَدعي ديماً يكون عَندنا طِفل شبه ملامحك</div></div>
+                <div class="glass-card"><img src="https://f.top4top.io/p_371478c0m1.jpg"><div class="image-caption">فى كُل مكان وزمان بَحب أبوسك وبَحب خدودك عشان كدة عاوزاك تاكل كتيييير أوي عشان أَعض خدودك لما تيجى من شوقى ليك 🫥 أغداً ألقاك يا خوف فؤادي حتي نُطفئ نيران الإشتياق؟</div></div>
+                <div class="glass-card"><img src="https://h.top4top.io/p_3714xm49z1.jpg"><div class="image-caption">حُضنك لَحظة تَلتقي فيها أرواحِنا جَسد بِجَسد، أمان ودِفء، ضِغط خفيف على جَسدي مَمزوج بمتعة الشوق، كأن الدُنيا كُلها تَوقفت لِلحظة واحدة، رائحتك، دقات قلبك، حرارة جَسدك، حتي صوت نَفَسك، كُلها صارت جزء من لحظة لا تُنسى، في حُضنك المسافات تَختفي، تَختفي الهموم والتوتر، فى حُضنك أصبح العالم مكان آمن تحت قُبلات شفافيك، فى حُضنك كُل شئ حَولنا لا يُهِم، لحظة حّضنك دفء وحماية وقوة وضعف بِ نَفس الوقت.</div></div>
+                <div class="glass-card"><img src="https://g.top4top.io/p_3714sfi0k1.jpg"><div class="image-caption">حركة رِجلك اللى بَحبها، وإيدك اللى أنا بَحبها، وشارع حُبنا وعُمارة حُبنا وقهوة حُبنا والشيشة اللى أنا بغير مِنها بس بَحب أشوفك بتشربها، مع إن الشيشة والنيكوتين بيضايقونى بس مش عاوزة أخسرك عشان موضوع زي دة، وأنا مَعاك فى أى حاجة بتريحك وهاشجعك 🫥</div></div>
+                <div class="glass-card"><img src="https://l.top4top.io/p_3714h0ynb1.jpg"><div class="image-caption">كُنت واقف هِنا والحُضن كان جميل</div></div>
+                <div class="glass-card"><img src="https://i.top4top.io/p_37147l63a1.jpg"><div class="image-caption">مَتي تقترب مِن حُضني، مَتي أشعر بحرارة جسدك على جَسدي، مَتي أتذوق من خُمر شفتيك لِكي أسكر وأفقد الوَعي وأنسى من أكون وأين أنا، متي أكون عالقة تحت تأثير قُبلاتك، لديك أجمل إبتسامة تَجعلني أرغب في تقبيلك حَتي أفقد نفسى وأكون عالقة بين يديك، آاااه عِندما تُقبلني كَأنها المرة الأولي بخجل ثم بشغف وتَجعلني أرتعش بين يديك ورَوحك ب رَوحي، قَبلني لتزيح هذا التعب عَني ثم تَدخل أرواحنا ب أجسادنا حتي نَحيا مِن جديد فنَشعر باللذة ولا نُلاحظ مُرور الوقت</div></div>
+                <div class="glass-card"><img src="https://c.top4top.io/p_3714bh7bt1.jpg"><div class="image-caption">« حِين تَهدأ وتَضع رأسك عِند قلبي أفهم أنني الأمان الوَحيد الذي تَبحث عَنه »</div></div>
+                <div class="glass-card"><img src="https://k.top4top.io/p_3714hcwku1.jpg"><div class="image-caption">كانت آخر أكلة فى السفرية مَعاك وكَان آخر يوم مع بعض فى السفرية، مِستنية اليوم اللي أشوفك فيه قدّامي، وأمسك إيدك من غير كلام، وأَضمّك ضمّة هادية تِطمّن قَلبي قبل ما تطمّنك. نِفسي أقولك سَاعتها قد إيه قلبي بيجري عَليك، وقَد إيه الشُوق ليك بِيكبر مع كل بُعد، وقد إيه وجودك فارق فيّا أكتر ما تتخيّل. نفسي الزمن يقف بينا، ويبقى لينا إحنا بس، سَقف واحد، وضِحكة واحدة، ونظرة منك تخلّي الدنيا كلها تهدى. عايزاك تبقى قُدّامي، وأبص في عينيك وأنسى أي تعب، أنسى نفسي والدنيا، وأفتكر بس إنك هنا… وإن ده كفاية. في اللحظة دي، هعرف إن العمر كله مُمكن يعدّي وأنا بين إيديك، وأنا مطمّنة إنك أحمد.</div></div>
+                <div class="glass-card"><img src="https://b.top4top.io/p_3714dqq3g1.jpg"><div class="image-caption">إيدك اللى كانت بِتلمس إيدى في شوارع إسكندرية كانت بِتطمن قلبي وعُيونك الحادة المَسحوبة العسلية بِتدخل الأمان جوا روحي</div></div>
+            </div>
+
+            <div style="text-align:center; padding-bottom:100px;">
+                <button class="btn-outline" onclick="goToPage3()">إفتح ب لُطف..هَذا قلبي بين يَديك 🎁</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="page-3">
+        <div class="secret-content">
+            <div class="floating-message animate__animated animate__fadeInUp">
+                <i class="fa-solid fa-heart" style="color:var(--primary); font-size:45px; margin-bottom:25px;"></i>
+                <div style="text-align: right; direction: rtl; font-size: 14px; line-height: 1.8; color: #fff;">
+                    <p style="font-weight: 800; font-size: 18px; color: var(--gold); text-align: center;">« إهداء »</p>
+                    <p>إلي عزيزي أحمد _إلى أثمن أقداري، وأبهي ما حَظيتُ به فى الحَياة، أهدي لَك هَذة الرسالة،</p>
+                    <p>مَرحباً وحُبا فى قَلبي، حَبيبي والرُوح التي عانقت رَوحي وزَوجي _أحمد_</p>
+                    <p>يا من كان لإسمك في حياتي وَافر النصيب، فَ مُنذ أن إلتقيتك، والسعادة تَحوّط أيامي. أُحدثك اليوم لا كَزوجةٍ وحَبيبةً وصَديقة وأُم وشَريكة لطريق حَياتك فحسب، بل كَقلبٍ وجد فيك وطنه، وكَ رُوح أنهكها الطريق فَ إطمأنت حين أصبحت بِجوارك، أحدثك كَ إمرأةٍ رأت فيك عَوض الله، وفي حُضورك سكينة. وفي حُبك أمانًا لا يخون. سعيدةٌ جدًا لأننا سنستقبل أعظم شهور العام سويًا وأيام حُبنا ف كُل عام ونَحن معًا… سندًا لبعضنا، وعونًا في كل درب. كل عام وأنت حَبيبي ورفيقي وملاذي الآمن، وسندي الذي أستند إليه حين تشتد الحياة. عَسى ربي أن يُبقينا لبعض سنينَ طوال، ونعيش سويًا كل محطات الحياة من ربيع الشباب وحتى المَشيب، كُل رجائي وكل دعائي، أن يظل هذا الحُب عَامِراً لا يَشيخ، وأن تبقى بجانبي وأنا بِجانبك كما العَهد بين قُلوبنا قلبًا لا يتبدل مَهما إشتد الطَريق وأن يكتب الله لنا من الأيام ما يُشبه صَفاءك وجَمال وَجهك ونُور مَملامحك، ومن الضِحكات ما يُرمم ما كسرته الحياة في رُوحنا؛ وأن أكون لك كَما كُنت لي، أمانًا، وسندًا، ورفقةً وصداقة وحُب لا يَخون.. ف وُجودك نعمة أحمدُ الله عليها سرًا وعَلناً، في يوم الحب وأعياد حُبنا ف كُل يوم مَعك عِيد حُب جَديد فى قلبي ، لا أكتب لك لأن المناسبة تَطلب كلامًا، بل لأن قلبي يَفيض بك ولا يعرف الصمت،( وإنتَ بتقول عليا لَكاكة وإنتَ مش عارف إن ده حُب ليك) أحبك لا كَعادة، بل كيقين. لا كعابر، بل كقدر اخترته بِملء إرادتي. أحبك لأنك الأمان حين يَضيق العالم، ولأنك الثابت الوحيد وسط كل المتغيرات. مَعك لا أخاف الغد، ولا أساوم على مشاعري، ولا أحتاج لغيرك ليكتمل قلبي. أعدك أن أختارك كل يوم، في الفرح، وفي التعب، وفي الصمت قبل الكلام. أعدك أن أكون لك وطنًا إذا أتعبتك الطرق، ويدًا لا تتركك مهما قلت الأيام. كل عام وأنت حبي الذي لا يشيخ، ووعدي الذي لا ينكسر، ورَجُلي الذي لم أخطئ حين اخترته. أحبك… حبًا يليق بك، ويُشبهني، ويستمر. إنِ أَحملك في قلبي كَما يَحمل الضوء فى عُيون العَاشقين، وكَأنك وَوردة نبتت في صدري لا تَذبل ولا تَععرف الخريف. أحبك كَدفء خَفي يتسلل إلى أيامي حين يَشتد على رَوحي الصقيع، حَمودي أنتَ كهمسة ناعمة تَمسح على جرح لا يراه سواك. أحبك لا لِذكراك، بل كنبض صغير يسكن داخلي لا تَشبهك الأشياء، ولا يُشبهك الغياب، لأنك أنتَ الغياب الذي يَحضر، والحُضور الذي لا يَغيب. أراك في تفاصيل اليوم العادية: في عِطر عابر لَك في غُرفتى ، في ظل يميل على حائط مَنزلى، في ليل طويل لا يَكتمل إلا بِذكرك وصَوتك. إياك أن تبتعد عني بعد كل هذا الحب الذي أحمله لك بداخلي إياك أن تفلت يدي وسط الطريق فالعالم لا يعني لي شيئًا بدونك إياك أن تنسى أني اخترتك لأنك الأمان الذي أحارب به مَخاوفي وأنتَ مَلجئي الوحيد، تَعلقى بِك يَزيد فى قلبى كُل يُوم بالرُغم من المِسافات والمُدن والبِحار التي تَفصل أجسادنا، إلا انا أرواحنا مُتداخلة من يوم حُبنا الأول 11/11،أتباهي وأفتخر ب حُبك، انا أختار ضَعفك وقُوتك وصِدقك وكُل شئ يرتبط بك بل أحبك كُلك وأحبك كما أنتَ تماماً، أحبك لأن من أول حديت لنا شَعرت إن أنا هَدف عُمرك . وخَسرت الجميع من أجلى كأنني إختيارك الوحيد فى هذا العالم، ف ضَعفك بين يدي أمانة لا ينقصك بل يرفعك في قلبى، فَ يا أعياد عُمرى يا أَمل أمنياتي، كُل عام وأنتَ فى حَياتي كُل الحَياة، و كُل عام وأنا أعياد عُمرك ودُنياك.</p>
+                    <p style="text-align: center; font-weight: 900; color: var(--gold); margin-top: 20px;">« لا توجد نهاية لأنك البداية في كُل شئ»</p>
+                </div>
+                <button onclick="location.reload()" style="background:none; border:none; color:var(--primary); margin-top:35px; font-size:13px; text-decoration:underline; cursor:pointer;">العودة للبداية</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function goToPage2() {
+            const inputVal = document.getElementById('passInput').value.trim();
+            if(inputVal === "22/7") { 
+                document.getElementById('page-1').style.transform = 'translateY(-100%)';
+                document.getElementById('page-1').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('page-1').style.display = 'none';
+                    document.getElementById('page-2').style.display = 'block';
+                    document.body.style.overflow = 'auto';
+                    setTimeout(() => { document.getElementById('page-2').style.opacity = '1'; checkScroll(); }, 50);
+                    startCounter();
+                    document.getElementById('loveSong1').play();
+                    document.getElementById('pIcon1').className = 'fa-solid fa-pause';
+                    createHearts();
+                }, 800);
+            } else { 
+                const btn = document.querySelector('.btn-style');
+                btn.innerHTML = "ركزي يا حبيبتي😂";
+                setTimeout(() => { btn.innerHTML = "أدخل عَالم حُبنا الخاص أنا وإنتَ"; }, 2000);
+            }
+        }
+
+        function goToPage3() {
+            document.getElementById('page-3').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            window.scrollTo(0,0);
+            setTimeout(() => { document.getElementById('page-3').style.opacity = '1'; }, 50);
+        }
+
+        function startCounter() {
+            const start = new Date("2025-07-22T00:00:00");
+            setInterval(() => {
+                const now = new Date();
+                let years = now.getFullYear() - start.getFullYear();
+                let months = now.getMonth() - start.getMonth();
+                let days = now.getDate() - start.getDate();
+                if (days < 0) { months--; const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0); days += lastMonth.getDate(); }
+                if (months < 0) { years--; months += 12; }
+                document.getElementById('years').innerText = Math.max(0, years);
+                document.getElementById('months').innerText = Math.max(0, months);
+                document.getElementById('days').innerText = Math.max(0, days);
+                document.getElementById('hours').innerText = now.getHours();
+                document.getElementById('mins').innerText = now.getMinutes();
+                document.getElementById('secs').innerText = now.getSeconds();
+            }, 1000);
+        }
+
+        function toggleMusic(audioId, iconId) {
+            const a1 = document.getElementById('loveSong1'), a2 = document.getElementById('loveSong2');
+            const i1 = document.getElementById('pIcon1'), i2 = document.getElementById('pIcon2');
+            const target = document.getElementById(audioId), icon = document.getElementById(iconId);
+            if(target.paused) { a1.pause(); a2.pause(); i1.className = i2.className = 'fa-solid fa-play'; target.play(); icon.className = 'fa-solid fa-pause'; }
+            else { target.pause(); icon.className = 'fa-solid fa-play'; }
+        }
+
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            setInterval(() => {
+                const heart = document.createElement('i');
+                heart.className = Math.random() > 0.8 ? 'fa-solid fa-star heart-particle' : 'fa-solid fa-heart heart-particle';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                heart.style.fontSize = (Math.random() * 10 + 10) + 'px';
+                container.appendChild(heart);
+                setTimeout(() => heart.remove(), 6000);
+            }, 300);
+        }
+
+        function checkScroll() {
+            document.querySelectorAll('.glass-card').forEach(card => {
+                const rect = card.getBoundingClientRect();
+                if(rect.top < window.innerHeight - 50) card.classList.add('show');
+            });
+        }
+        document.getElementById('page-2').onscroll = checkScroll;
+    </script>
+</body>
+</html>
